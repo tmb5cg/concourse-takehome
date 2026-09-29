@@ -104,15 +104,8 @@ def select_dataset(question: str) -> dict:
     return selection
 
 
-def answer_question(question: str, selection: Optional[dict] = None) -> str:
-    """Route the question, then answer it from the selected dataset.
-
-    Pass `selection` to reuse a routing decision that was already made.
-    """
-    started = time.time()
-    trace("answer", f"question: {question!r}")
-    if selection is None:
-        selection = select_dataset(question)
+def answer_from_dataset(question: str, selection: dict) -> str:
+    """Answer the question from an already-routed dataset, or explain why none fits."""
     name = selection["dataset"]
     if name == "none":
         trace("answer", "no dataset selected, returning fixed message (no LLM call)")
@@ -128,7 +121,14 @@ def answer_question(question: str, selection: Optional[dict] = None) -> str:
         question=question,
     )
     trace("answer", f"built context from profile + stats + {len(dataset['df'])} rows ({len(user)} chars)")
-    answer = call_llm(prompts.ANSWER_SYSTEM, user, temperature=0)
+    return call_llm(prompts.ANSWER_SYSTEM, user, temperature=0)
+
+
+def answer_question(question: str) -> str:
+    """Route the question, then answer it from the selected dataset."""
+    started = time.time()
+    trace("answer", f"question: {question!r}")
+    answer = answer_from_dataset(question, select_dataset(question))
     trace("answer", f"done in {time.time() - started:.1f}s")
     return answer
 

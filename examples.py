@@ -3,7 +3,7 @@
 Usage: python examples.py
 """
 
-from main import MODEL, answer_question, select_dataset
+from main import MODEL, answer_from_dataset, select_dataset
 
 # (question, expected dataset, what the case tests)
 EXAMPLES = [
@@ -26,7 +26,7 @@ def main() -> None:
 
     for question, expected, case in EXAMPLES:
         selection = select_dataset(question)
-        answer = answer_question(question, selection)  # reuse the routing decision
+        answer = answer_from_dataset(question, selection)
 
         is_correct = selection["dataset"] == expected
         correct += is_correct
