@@ -127,6 +127,14 @@ also have some questions about examples.py like is this something we can say we'
 
 Outcome: discussion only, no code change. `examples.py` is a hand-labeled test set; the third item in each entry is a label for what the case tests.
 
+### 7. Follow-up
+
+```text
+i still think the folder strucutre could be better / more clear to humans. like do we have a service layer that does the data description and analysis for the LLM via pandas? and can make it dataset agnostic? like the ideas of a "shopping_status" function seems silly when like in practice this is something that needs to scale to infinitely many datasets no ? is there a right answer here / am i nitpicking / not focusing on the right thing? don't just agree with me to agree with me. like what r ur thoughts on building out a basic super quick thing that might even make additional llm calls whose job is basically to take in a dataset and it returns a summary that works for all types of CSVs. and then we could even bake in like comment code like "here we'd call a service that determines based on dataset size like which service worker handles it " or something idk. wdyt . this at least would give me more to talk about the different appraoches on how to supply an llm with the right information it needs and also considers importance of speed
+```
+
+Outcome: the two per-dataset stats functions became one dtype-driven `compute_stats`, and the pandas code moved to `profiling.py`. The LLM-written summary and the placeholder comments were not built; both are under next steps in the README.
+
 ## Runtime prompts
 
 The exact text is in `prompts.py`.

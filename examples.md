@@ -17,8 +17,8 @@ I'm using the **shopping_habits** dataset.
 
 Based on the precomputed statistics:
 
-- **Female customers** have an average spending score of **49.8** (n=13)
-- **Male customers** have an average spending score of **53.8** (n=17)
+- **Female customers** (n=13): average spending score of **49.8**
+- **Male customers** (n=17): average spending score of **53.8**
 
 Male customers have a slightly higher average spending score than female customers, though the difference is modest (about 4 points on the 1-100 scale).
 
@@ -48,9 +48,9 @@ This is notably higher than the under 35 group (46.9) and the 35-54 group (43.9)
 
 I'm using the **shopping_habits** dataset.
 
-Based on the precomputed statistics, there is **virtually no relationship** between annual income and spending score. The Pearson correlation coefficient is **-0.16**, which indicates an extremely weak negative correlation—essentially negligible.
+Based on the precomputed Pearson correlation, there is a **weak negative relationship** between annual income and spending score: the correlation is **-0.16**.
 
-This means that knowing a customer's annual income provides almost no predictive power for their spending score. Some high-income customers spend a lot (like the 36-year-old female with $154,498 income and a score of 93), while others spend very little (like the 68-year-old female with $197,154 income and a score of 13). The same variability appears across all income levels.
+This means that as annual income increases, spending score tends to decrease slightly, but the relationship is very weak. In practical terms, income is not a strong predictor of how much someone shops or spends. Other factors (like age or personal preferences) appear to matter more for determining spending behavior in this sample.
 
 ## Which programming language is searched the most overall?
 
@@ -63,7 +63,7 @@ This means that knowing a customer's annual income provides almost no predictive
 
 I'm using the **weekly_searches** dataset.
 
-**Python** is searched the most overall. It has a mean of 78.4 across the 30 weeks, compared to Java's mean of 47.0 and C++'s mean of 19.5. Python also has the highest maximum value (89) and consistently dominates search interest throughout the period.
+**Python** is searched the most overall. It has a mean search interest of 78.4, compared to Java at 47.0 and C++ at 19.5. Python also has the highest maximum value (89.0) and consistently ranks above the other two languages throughout the 30-week period.
 
 ## What happened to programming language searches in late December 2023?
 
@@ -76,26 +76,32 @@ I'm using the **weekly_searches** dataset.
 
 I'm using the **weekly_searches** dataset.
 
-In late December 2023, all three programming languages experienced a notable drop in search interest:
+In late December 2023, all three programming languages experienced a sharp drop in search interest:
 
-- **Python** fell to its lowest point of the entire 30-week period at 54 on 2023-12-24 (Christmas week), down from 70 the previous week
-- **Java** also hit its minimum of 32 that same week, down from 41
-- **C++** reached its lowest at 14, down from 17
+- **Python** fell from 74 (Dec 10) to 54 (Dec 24)—the lowest point in the entire 30-week period
+- **Java** dropped from 45 (Dec 10) to 32 (Dec 24)—also its minimum value
+- **C++** declined from 19 (Dec 10) to 14 (Dec 24)—its lowest point as well
 
-This sharp decline across all three languages in the week of December 24th likely reflects reduced search activity during the Christmas holiday period, when fewer people are actively programming or learning.
+This synchronized decline across all three languages suggests a seasonal effect around the Christmas holiday period, when search activity likely decreased due to reduced work and learning activity.
 
 ## Is interest in C++ growing or declining?
 
 - **Case:** clear searches
 - **Expected dataset:** `weekly_searches`
 - **Routed dataset:** `weekly_searches` (correct)
-- **Router reasoning:** The question asks about trends in C++ interest over time, which can be answered by examining the C++ column values across the Week column in the weekly_searches dataset.
+- **Router reasoning:** The question asks about trends in C++ interest over time, which is directly available in the weekly_searches dataset that contains weekly C++ search values from October 2023 to April 2024.
 
 **Answer:**
 
 I'm using the **weekly_searches** dataset.
 
-Interest in C++ is **declining**. The precomputed statistics show that C++ had a mean of 19.5 across the 30 weeks, but the first 4 weeks averaged 21.5 while the last 4 weeks averaged only 18.2—a decline of 3.2 points. Additionally, C++ peaked early (week of 2023-10-15 at 22) and hit its lowest point during the holiday period (2023-12-24 at 14), with recent weeks (late March through April 2024) showing values in the 17–19 range, well below the overall mean.
+Interest in C++ is **declining overall**. The data shows:
+
+- **First 4 weeks average**: 21.5 vs. **last 4 weeks average**: 18.2, a decline of 3.2 points
+- **Range**: C++ peaked at 22 in October 2023 and has generally trended downward, with a notable dip to 14 in late December 2023
+- **Current level**: The most recent weeks (April 2024) show values around 17–19, well below the early October baseline
+
+While there was a brief recovery in early 2024 (reaching 21 in late January–February), the trend has resumed downward in recent weeks.
 
 ## What is the capital of France?
 
@@ -113,18 +119,18 @@ No available dataset can answer this question. Router reasoning: The question as
 - **Case:** needs both datasets
 - **Expected dataset:** `none`
 - **Routed dataset:** `none` (correct)
-- **Router reasoning:** The question requires combining customer age data from shopping_habits with programming language search interest from weekly_searches, but these datasets share no common key and cannot be joined.
+- **Router reasoning:** The question requires correlating customer age (from shopping_habits) with Python search interest (from weekly_searches), but these datasets have no common key and cannot be joined together.
 
 **Answer:**
 
-No available dataset can answer this question. Router reasoning: The question requires combining customer age data from shopping_habits with programming language search interest from weekly_searches, but these datasets share no common key and cannot be joined.
+No available dataset can answer this question. Router reasoning: The question requires correlating customer age (from shopping_habits) with Python search interest (from weekly_searches), but these datasets have no common key and cannot be joined together.
 
 ## Which week had the highest score for Java?
 
 - **Case:** tricky: 'score' is a shopping column name
 - **Expected dataset:** `weekly_searches`
 - **Routed dataset:** `weekly_searches` (correct)
-- **Router reasoning:** The question asks for the week with the highest Java score, which requires the weekly_searches dataset that contains both Week dates and Java search interest values.
+- **Router reasoning:** The question asks for the week with the highest Java score, which requires the weekly_searches dataset that contains Week dates and Java search interest values.
 
 **Answer:**
 
@@ -143,6 +149,6 @@ According to the precomputed statistics, **Java had its highest score in the wee
 
 I'm using the **shopping_habits** dataset.
 
-No, big earners are not necessarily big spenders. The Pearson correlation between Annual Income and Spending Score is **-0.16**, indicating a weak negative relationship—if anything, higher income is slightly associated with *lower* spending scores.
+Based on the precomputed statistics, **big earners are not big spenders** in this dataset. The Pearson correlation between Annual Income and Spending Score is **-0.16**, indicating a weak negative relationship—higher income is slightly associated with *lower* spending scores, not higher ones.
 
-Looking at the data directly: some high-income customers have high spending scores (e.g., the 36-year-old female with $154,498 income and score 93), but others have very low scores (e.g., the 68-year-old female with $197,154 income and score 13). Meanwhile, lower-income customers sometimes show high spending (e.g., the 41-year-old female with $57,456 income and score 71). Income alone is not a reliable predictor of shopping behavior in this sample.
+Looking at the data more closely: some high-income customers have low spending scores (e.g., the customer earning $197,154 has a score of only 13), while some lower-income customers are prolific spenders (e.g., the customer earning $34,713 has a score of 82). Age appears to be a slightly better predictor of spending (correlation of 0.16), with customers 55+ averaging a spending score of 60.6 compared to 46.9 for those under 35.
