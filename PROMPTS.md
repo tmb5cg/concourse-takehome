@@ -135,6 +135,28 @@ i still think the folder strucutre could be better / more clear to humans. like 
 
 Outcome: the two per-dataset stats functions became one dtype-driven `compute_stats`, and the pandas code moved to `profiling.py`. The LLM-written summary and the placeholder comments were not built; both are under next steps in the README.
 
+### 8. Follow-up
+
+```text
+ok and here's another question. is there a verbosity flag or something that can include all the logs for a given call? like i'm testing it out and here's some output: """
+
+[terminal output of three test runs of main.py]
+
+"""
+
+don't make any code changes yet. i'm wondering if we could have some nice categorization of like which submodule of the logger is doing the talking to see like at what nested level how far a decision goes if that makes sense almost like a sideways christmas tree that we'll see the first log reflect the highest level and then the last the same . wdyt
+```
+
+Outcome: a proposal only. It also pointed out that "what datasets do you have access to?" got an unhelpful reply.
+
+### 9. Follow-up
+
+```text
+yes please proceed w both
+```
+
+Outcome: a `-v` flag with logs tagged and indented by layer, and a "none" message that lists the available datasets.
+
 ## Runtime prompts
 
 The exact text is in `prompts.py`.
@@ -146,4 +168,4 @@ The exact text is in `prompts.py`.
 | `ROUTER_RETRY` | Appended to the user message when the first reply can't be parsed. | Restates only the output format, so the retry differs from the first attempt. |
 | `ANSWER_SYSTEM` | Tells the model how to answer from the selected dataset. | Quote precomputed stats instead of doing arithmetic; name the dataset used; admit when the data can't answer; stay cautious because n=30. |
 | `ANSWER_USER` | Carries the profile, precomputed stats, full CSV and question. | Stats come before the raw rows so they are the first source the model reads. |
-| `NO_DATASET_MESSAGE` | Returned when the router says "none". No LLM call. | Includes the router's reasoning so the user sees why. |
+| `NO_DATASET_MESSAGE` | Returned when the router says "none". No LLM call. | Includes the router's reasoning so the user sees why, and lists the available datasets so they know what they can ask. |

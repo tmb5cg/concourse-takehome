@@ -10,6 +10,7 @@ pip install -r requirements.txt
 cp .env.example .env            # then add your ANTHROPIC_API_KEY
 
 python main.py "Which age group spends the most?"
+python main.py -v "Which age group spends the most?"   # log every step
 python examples.py              # prints routing accuracy, rewrites examples.md
 ```
 
@@ -29,13 +30,15 @@ Two layers: `profiling.py` is the data layer (pandas only, no LLM) and `main.py`
 - **LLM router with a "none" option.** Routing is zero-shot classification over the profiles. Keyword matching breaks on wording like "big earners", and a trained classifier needs retraining for every new dataset. "none" covers off-topic questions and questions needing both datasets, which share no join key. The reply is JSON with a `reasoning` field; on a bad reply it retries once, then fails closed to "none".
 - **Stats computed in code.** LLMs are unreliable at arithmetic, so pandas computes the numbers and the prompt tells the model to quote them. Numeric columns get summary stats and correlations, categorical columns get group averages, date columns get highs, lows and trend. They're computed once at load, so answering a question adds no pandas work. Every number in an answer traces back to a line of code.
 - **PII drop.** `Customer ID` is removed at load, before anything reaches the LLM.
-- **Logging.** Every routing decision is logged with its reasoning.
+- **Logging.** Every routing decision is logged with its reasoning. With `-v`, each step is logged and tagged by layer (`answer` > `router` > `llm`), indented by nesting, with latency and token counts per LLM call.
+- **Helpful "none".** When nothing matches, the reply lists the available datasets, with no LLM call.
 
 ## Known limitations
 
 - Stats are generic, not question-specific. Questions outside them (e.g. a median for one gender) make the model read raw rows, which is less reliable.
 - Descriptions and age buckets are still written by hand per dataset.
 - The model can still do small arithmetic despite the instruction (one example answer says "about 4 points"). The prompt reduces this; it doesn't enforce it.
+- Logs go to the terminal and are not persisted; a real audit trail would store one structured record per question.
 - No confidence score: a self-reported LLM confidence isn't calibrated, so only the reasoning is returned.
 - Accuracy is measured on 10 hand-written questions, which is a smoke test, not an evaluation.
 - The default model is Claude Haiku 4.5 because newer models reject the `temperature` parameter.

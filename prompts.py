@@ -54,4 +54,8 @@ Full data (CSV):
 {question}
 </question>"""
 
-NO_DATASET_MESSAGE = "No available dataset can answer this question. Router reasoning: {reasoning}"
+NO_DATASET_MESSAGE = """No available dataset can answer this question.
+Reason: {reasoning}
+
+Available datasets:
+{datasets}"""
