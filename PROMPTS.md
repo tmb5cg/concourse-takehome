@@ -157,6 +157,14 @@ yes please proceed w both
 
 Outcome: a `-v` flag with logs tagged and indented by layer, and a "none" message that lists the available datasets.
 
+### 10. Follow-up
+
+```text
+ok push for me please
+```
+
+Outcome: pushed to GitHub.
+
 ## Runtime prompts
 
 The exact text is in `prompts.py`.
