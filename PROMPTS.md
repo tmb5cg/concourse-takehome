@@ -165,6 +165,22 @@ ok push for me please
 
 Outcome: pushed to GitHub.
 
+### 11. Follow-up
+
+```text
+do you think the main.py is human readable enough? like i found it a bit conufsing we reuse the answer_question function [...]
+```
+
+Outcome: a proposal only. `answer_question` took an optional `selection` argument that only `examples.py` used, so the suggestion was to split it in two.
+
+### 12. Follow-up
+
+```text
+i like your suggested strucutre better can you please make that changes and commit and push for me
+```
+
+Outcome: `answer_question` was split into `answer_from_dataset` and a thin `answer_question` wrapper, removing the optional `selection` parameter.
+
 ## Runtime prompts
 
 The exact text is in `prompts.py`.
